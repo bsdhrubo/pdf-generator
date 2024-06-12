@@ -1,15 +1,19 @@
 import * as fs from "fs";
+import { IDepositSummary } from "./interfaces/depositSummary";
 
 const jsonData = fs.readFileSync("./example/pdf_payload.json", "utf8");
 
 // console.log(Object.keys(JSON.parse(jsonData)));
 
-export const tableData = JSON.parse(jsonData);
+export const pdfData: IDepositSummary = JSON.parse(jsonData) as IDepositSummary;
+export const tableData = pdfData.items;
 
 // console.log(tableData);
 
 function buildTableBody(data, columns) {
 	var body = [];
+
+	console.log(columns);
 
 	body.push(columns);
 
@@ -36,46 +40,46 @@ function table(data, columns) {
 	return {
 		layout: {
 			defaultBorder: false,
-			hLineWidth: function (i, node) {
-				return 1;
-			},
-			vLineWidth: function (i, node) {
-				return 1;
-			},
+			// hLineWidth: function (i, node) {
+			// 	return 1;
+			// },
+			// vLineWidth: function (i, node) {
+			// 	return 1;
+			// },
 			hLineColor: function (i, node) {
 				if (i === 1 || i === 0) {
-					return "#bfdde8";
+					return "#0000";
 				}
 				return "#eaeaea";
 			},
 			vLineColor: function (i, node) {
 				return "#eaeaea";
 			},
-			hLineStyle: function (i, node) {
-				// if (i === 0 || i === node.table.body.length) {
-				return null;
-				//}
-			},
-			// vLineStyle: function (i, node) { return {dash: { length: 10, space: 4 }}; },
-			paddingLeft: function (i, node) {
-				return 10;
-			},
-			paddingRight: function (i, node) {
-				return 10;
-			},
-			paddingTop: function (i, node) {
-				return 2;
-			},
-			paddingBottom: function (i, node) {
-				return 2;
-			},
-			fillColor: function (rowIndex, node, columnIndex) {
-				return "#fff";
-			},
+			// hLineStyle: function (i, node) {
+			// 	// if (i === 0 || i === node.table.body.length) {
+			// 	return null;
+			// 	//}
+			// },
+			// // vLineStyle: function (i, node) { return {dash: { length: 10, space: 4 }}; },
+			// paddingLeft: function (i, node) {
+			// 	return 10;
+			// },
+			// paddingRight: function (i, node) {
+			// 	return 10;
+			// },
+			// paddingTop: function (i, node) {
+			// 	return 2;
+			// },
+			// paddingBottom: function (i, node) {
+			// 	return 2;
+			// },
+			// fillColor: function (rowIndex, node, columnIndex) {
+			// 	return "#fff";
+			// },
 		},
 		table: {
 			headerRows: 1,
-			widths: [200, 100, 80, 80],
+			widths: [200, 100, 80, 120],
 			body: buildTableBody(data, columns),
 		},
 	};
@@ -87,36 +91,33 @@ export const ddData = {
 	content: [
 		{
 			columns: [
-				{
-					image: "./qr.png",
-					width: 150,
-				},
+				// {
+				// 	image: "./qr.png",
+				// 	width: 150,
+				// },
 				[
 					{
-						text: "TS Demo",
-						color: "#333333",
+						text: "Account Info",
 						width: "*",
-						fontSize: 28,
+						fontSize: 12,
 						bold: true,
 						alignment: "right",
-						margin: [0, 0, 0, 15],
+						margin: [0, 0, 30, 30],
 					},
 					{
 						stack: [
 							{
 								columns: [
 									{
-										text: "Receipt No.",
-										color: "#aaaaab",
+										text: "Account Name",
 										bold: true,
 										width: "*",
 										fontSize: 12,
 										alignment: "right",
 									},
 									{
-										text: "00001",
+										text: pdfData.accountName,
 										bold: true,
-										color: "#333333",
 										fontSize: 12,
 										alignment: "right",
 										width: 100,
@@ -126,17 +127,15 @@ export const ddData = {
 							{
 								columns: [
 									{
-										text: "Date Issued",
-										color: "#aaaaab",
+										text: "Bank Account No.",
 										bold: true,
 										width: "*",
 										fontSize: 12,
 										alignment: "right",
 									},
 									{
-										text: "June 01, 2016",
+										text: pdfData.bankAccountNumber,
 										bold: true,
-										color: "#333333",
 										fontSize: 12,
 										alignment: "right",
 										width: 100,
@@ -146,19 +145,16 @@ export const ddData = {
 							{
 								columns: [
 									{
-										text: "Status",
-										color: "#aaaaab",
+										text: "Payment Date",
 										bold: true,
 										fontSize: 12,
 										alignment: "right",
 										width: "*",
 									},
 									{
-										text: "PAID",
-										bold: true,
-										fontSize: 14,
+										text: pdfData.date,
+										fontSize: 12,
 										alignment: "right",
-										color: "green",
 										width: 100,
 									},
 								],
