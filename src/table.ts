@@ -242,5 +242,69 @@ export const ddData = {
 			fontSize: 13,
 		},
 		table(tableData.slice(1, 20), Object.keys(tableData[0])),
+		"\n",
+		{
+			layout: {
+				defaultBorder: false,
+				// hLineWidth: function (i, node) {
+				// 	return 1;
+				// },
+				// vLineWidth: function (i, node) {
+				// 	return 1;
+				// },
+				hLineColor: function (i, node) {
+					return "#0000";
+				},
+				vLineColor: function (i, node) {
+					return "#0000";
+				},
+				hLineStyle: function (i, node) {
+					// if (i === 0 || i === node.table.body.length) {
+					return null;
+					//}
+				},
+				// vLineStyle: function (i, node) { return {dash: { length: 10, space: 4 }}; },
+				paddingLeft: function (i, node) {
+					return 10;
+				},
+				paddingRight: function (i, node) {
+					return 10;
+				},
+				paddingTop: function (i, node) {
+					return 3;
+				},
+				paddingBottom: function (i, node) {
+					return 3;
+				},
+				fillColor: function (rowIndex, node, columnIndex) {
+					return "#fff";
+				},
+			},
+			table: {
+				// headerRows: 1,
+				widths: ["*", "auto"],
+				body: [
+					[
+						{
+							text: pdfData.totalItems,
+							bold: true,
+							fontSize: 12,
+							alignment: "right",
+							border: [false, false, false, true],
+							margin: [0, 5, 0, 5],
+						},
+						{
+							text: pdfData.totalAmount,
+							bold: true,
+							fontSize: 12,
+							alignment: "right",
+							border: [false, false, false, true],
+							margin: [0, 5, 0, 5],
+						},
+					],
+				],
+			},
+		},
+		"\n\n",
 	],
 };
