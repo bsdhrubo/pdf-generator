@@ -4,8 +4,7 @@ export interface IDepositSummaryItem {
 	Reference: string;
 	AmountPaid: string;
 }
-
-export interface IDepositSummary {
+export interface IDepositSummaryTopInfo {
 	title: string;
 	ref: string;
 	accountName: string;
@@ -13,5 +12,7 @@ export interface IDepositSummary {
 	date: string;
 	totalItems: string;
 	totalAmount: string;
+}
+export interface IDepositSummary extends IDepositSummaryTopInfo {
 	items: IDepositSummaryItem[];
 }
